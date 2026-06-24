@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Próxima — Consultoría para PYMEs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1A2B4A;
+      --teal:   #2EC4B6;
+      --amber:  #F59E0B;
+      --light:  #F7F9FB;
+      --gray:   #6B7280;
+      --white:  #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(247,249,251,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(26,43,74,0.08);
+    }
+
+    .logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--teal); }
+
+    nav ul {
+      display: flex; gap: 2rem; list-style: none;
+    }
+
+    nav ul a {
+      font-size: 0.9rem; font-weight: 500;
+      color: var(--gray); text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--navy); }
+
+    .nav-cta {
+      background: var(--teal); color: var(--white) !important;
+      padding: 0.5rem 1.2rem; border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: #25a99d !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 7rem 2.5rem 4rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center; width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(46,196,182,0.1);
+      padding: 0.35rem 0.9rem; border-radius: 4px;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--navy);
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .rotating-wrapper {
+      display: inline-block;
+      position: relative;
+      min-width: 320px;
+      height: 1.2em;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+
+    .rotating-text {
+      position: absolute; left: 0; top: 0;
+      white-space: nowrap;
+      color: var(--teal);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .rotating-text.active {
+      opacity: 1; transform: translateY(0);
+    }
+
+    .rotating-text.exit {
+      opacity: 0; transform: translateY(-30px);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem; color: var(--gray);
+      margin: 1.4rem 0 2.2rem;
+      max-width: 440px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--navy); color: var(--white);
+      padding: 0.85rem 1.8rem; border-radius: 8px;
+      font-weight: 600; font-size: 0.95rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: #253d69; transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent; color: var(--navy);
+      padding: 0.85rem 1.8rem; border-radius: 8px;
+      font-weight: 600; font-size: 0.95rem;
+      text-decoration: none; border: 2px solid var(--navy);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover { background: var(--navy); color: var(--white); }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+    }
+
+    .dashboard-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 1.8rem;
+      box-shadow: 0 20px 60px rgba(26,43,74,0.12);
+      border: 1px solid rgba(26,43,74,0.06);
+    }
+
+    .dash-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+
+    .dash-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: 0.95rem; color: var(--navy);
+    }
+
+    .dash-badge {
+      font-size: 0.72rem; font-weight: 600;
+      background: rgba(46,196,182,0.12); color: var(--teal);
+      padding: 0.25rem 0.65rem; border-radius: 20px;
+    }
+
+    .dash-metrics {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-bottom: 1.4rem;
+    }
+
+    .metric {
+      background: var(--light);
+      border-radius: 10px; padding: 1rem;
+    }
+
+    .metric-label {
+      font-size: 0.72rem; color: var(--gray);
+      font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 0.3rem;
+    }
+
+    .metric-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.4rem; font-weight: 800; color: var(--navy);
+    }
+
+    .metric-delta {
+      font-size: 0.75rem; font-weight: 600; color: #22c55e;
+      margin-top: 0.2rem;
+    }
+
+    .metric-delta.neg { color: #ef4444; }
+
+    .mini-bar-chart {
+      margin-top: 0.4rem;
+      display: flex; align-items: flex-end; gap: 4px; height: 40px;
+    }
+
+    .bar {
+      flex: 1; border-radius: 3px 3px 0 0;
+      background: rgba(46,196,182,0.2);
+      transition: height 0.6s ease;
+    }
+
+    .bar.active { background: var(--teal); }
+
+    .dash-divider {
+      height: 1px; background: rgba(26,43,74,0.06);
+      margin: 1.2rem 0;
+    }
+
+    .dash-row {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.82rem; margin-bottom: 0.6rem;
+    }
+
+    .dash-row-label { color: var(--gray); }
+    .dash-row-value { font-weight: 600; color: var(--navy); }
+
+    .floating-badge {
+      position: absolute;
+      background: var(--white);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      box-shadow: 0 8px 24px rgba(26,43,74,0.14);
+      font-size: 0.8rem; font-weight: 600;
+      display: flex; align-items: center; gap: 0.5rem;
+      border: 1px solid rgba(26,43,74,0.06);
+    }
+
+    .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+
+    .badge-top {
+      top: -18px; right: -18px;
+      color: #22c55e;
+    }
+
+    .badge-top .badge-dot { background: #22c55e; }
+
+    .badge-bottom {
+      bottom: -18px; left: -18px;
+      color: var(--amber);
+    }
+
+    .badge-bottom .badge-dot { background: var(--amber); }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 5rem 2.5rem; }
+
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--gray); font-size: 1rem;
+      max-width: 520px; line-height: 1.7;
+    }
+
+    /* ── PROBLEMA ── */
+    .problem { background: var(--navy); color: var(--white); }
+
+    .problem .section-title { color: var(--white); }
+    .problem .section-eyebrow { color: var(--teal); }
+
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+
+    .problem-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 1.8rem;
+      transition: background 0.2s;
+    }
+
+    .problem-card:hover { background: rgba(255,255,255,0.1); }
+
+    .problem-icon {
+      font-size: 2rem; margin-bottom: 1rem;
+    }
+
+    .problem-card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 0.6rem; color: var(--white);
+    }
+
+    .problem-card p {
+      font-size: 0.88rem; color: rgba(255,255,255,0.6);
+      line-height: 1.65;
+    }
+
+    /* ── SERVICIOS ── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 14px; padding: 2rem;
+      border: 1px solid rgba(26,43,74,0.08);
+      box-shadow: 0 4px 20px rgba(26,43,74,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--teal);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,43,74,0.12); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-number {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--teal); letter-spacing: 0.1em;
+      margin-bottom: 1rem; display: block;
+    }
+
+    .service-card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 0.7rem;
+    }
+
+    .service-card p {
+      font-size: 0.87rem; color: var(--gray);
+      line-height: 1.65; margin-bottom: 1.4rem;
+    }
+
+    .service-includes {
+      list-style: none; margin-bottom: 1.6rem;
+    }
+
+    .service-includes li {
+      font-size: 0.82rem; color: var(--navy);
+      padding: 0.3rem 0;
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+
+    .service-includes li::before {
+      content: '✓'; color: var(--teal);
+      font-weight: 700; flex-shrink: 0;
+    }
+
+    .service-price {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.3rem; font-weight: 800; color: var(--navy);
+    }
+
+    .service-price span {
+      font-size: 0.78rem; font-weight: 400; color: var(--gray);
+    }
+
+    /* ── PROCESO ── */
+    .process { background: var(--white); }
+
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2rem; margin-top: 3rem; position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: 12.5%; right: 12.5%;
+      height: 2px;
+      background: linear-gradient(to right, var(--teal), rgba(46,196,182,0.2));
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center; position: relative; z-index: 1;
+    }
+
+    .step-circle {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--teal); color: var(--white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+      box-shadow: 0 4px 16px rgba(46,196,182,0.35);
+    }
+
+    .step h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 0.82rem; color: var(--gray); line-height: 1.6;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, #253d69 100%);
+      text-align: center;
+      border-radius: 20px;
+      margin: 0 2.5rem 4rem;
+      padding: 4rem 2rem;
+    }
+
+    .cta-section h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem; max-width: 480px;
+      margin: 0 auto 2.5rem; line-height: 1.7;
+    }
+
+    .cta-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+
+    .btn-teal {
+      background: var(--teal); color: var(--white);
+      padding: 0.9rem 2rem; border-radius: 8px;
+      font-weight: 700; font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-teal:hover { background: #25a99d; transform: translateY(-1px); }
+
+    .btn-outline-white {
+      background: transparent; color: var(--white);
+      padding: 0.9rem 2rem; border-radius: 8px;
+      font-weight: 600; font-size: 1rem;
+      text-decoration: none; border: 2px solid rgba(255,255,255,0.4);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline-white:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.5);
+      text-align: center; padding: 2rem;
+      font-size: 0.82rem;
+    }
+
+    footer strong { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .problem-grid, .services-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { display: none; }
+      nav ul { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      section { padding: 3.5rem 1.5rem; }
+      .cta-section { margin: 0 1.5rem 3rem; padding: 3rem 1.5rem; }
+      .process-steps { grid-template-columns: 1fr; }
+      .rotating-wrapper { min-width: 200px; }
+    }
+
+    /* Fade-in on scroll */
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Próx<span>ima</span></div>
+  <ul>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proceso">Cómo funciona</a></li>
+    <li><a href="#contacto" class="nav-cta">Hablar con un asesor</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section style="padding-top: 0; padding-bottom: 0;">
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <span class="hero-eyebrow">Consultoría para PYMEs · Guatemala</span>
+        <h1>
+          Tu negocio merece<br>
+          dejar de improvisar<br>
+          <div class="rotating-wrapper">
+            <span class="rotating-text active" id="r0">sus finanzas.</span>
+            <span class="rotating-text" id="r1">su gente.</span>
+            <span class="rotating-text" id="r2">sus procesos.</span>
+          </div>
+        </h1>
+        <p class="hero-sub">
+          Ayudo a dueños de empresa a ordenar su negocio con herramientas concretas — no con teoría. Flujos de caja, políticas de RRHH y automatizaciones que realmente usan.
+        </p>
+        <div class="hero-actions">
+          <a href="#contacto" class="btn-primary">Agenda una llamada gratis</a>
+          <a href="#servicios" class="btn-secondary">Ver servicios</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="floating-badge badge-top">
+          <div class="badge-dot"></div> Flujo de caja al día
+        </div>
+        <div class="dashboard-card">
+          <div class="dash-header">
+            <span class="dash-title">Tablero Financiero</span>
+            <span class="dash-badge">En vivo</span>
+          </div>
+          <div class="dash-metrics">
+            <div class="metric">
+              <div class="metric-label">Ingresos mes</div>
+              <div class="metric-value">Q84k</div>
+              <div class="metric-delta">↑ 12% vs mes anterior</div>
+              <div class="mini-bar-chart">
+                <div class="bar" style="height:45%"></div>
+                <div class="bar" style="height:60%"></div>
+                <div class="bar" style="height:52%"></div>
+                <div class="bar" style="height:75%"></div>
+                <div class="bar active" style="height:88%"></div>
+              </div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Gastos fijos</div>
+              <div class="metric-value">Q31k</div>
+              <div class="metric-delta neg">↑ 3% vs meta</div>
+              <div class="mini-bar-chart">
+                <div class="bar" style="height:70%"></div>
+                <div class="bar" style="height:68%"></div>
+                <div class="bar" style="height:72%"></div>
+                <div class="bar" style="height:69%"></div>
+                <div class="bar active" style="height:73%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-divider"></div>
+          <div class="dash-row">
+            <span class="dash-row-label">Cuentas por cobrar</span>
+            <span class="dash-row-value">Q18,400</span>
+          </div>
+          <div class="dash-row">
+            <span class="dash-row-label">Cuentas por pagar</span>
+            <span class="dash-row-value">Q12,100</span>
+          </div>
+          <div class="dash-row">
+            <span class="dash-row-label">Posición de caja</span>
+            <span class="dash-row-value" style="color: var(--teal);">Q24,700</span>
+          </div>
+        </div>
+        <div class="floating-badge badge-bottom">
+          <div class="badge-dot"></div> Política de viáticos lista
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problem" id="problema">
+  <div class="section-inner">
+    <span class="section-eyebrow">El problema</span>
+    <h2 class="section-title">Muchas empresas operan<br>con herramientas de hace 10 años.</h2>
+    <div class="problem-grid">
+      <div class="problem-card fade-in">
+        <div class="problem-icon">📊</div>
+        <h3>Sin control financiero real</h3>
+        <p>Las decisiones se toman a ojo. No saben exactamente cuánto tienen, cuánto deben ni qué viene.</p>
+      </div>
+      <div class="problem-card fade-in">
+        <div class="problem-icon">👥</div>
+        <h3>Políticas que nadie aplica</h3>
+        <p>Los acuerdos con el equipo son de palabra. Sin documentos claros, los conflictos se repiten.</p>
+      </div>
+      <div class="problem-card fade-in">
+        <div class="problem-icon">⚙️</div>
+        <h3>Procesos que dependen de una persona</h3>
+        <p>Si el que sabe cómo se hace algo se va, el negocio para. No hay sistema, solo memoria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <span class="section-eyebrow">Servicios</span>
+    <h2 class="section-title">Lo que hacemos juntos</h2>
+    <p class="section-sub">Cada servicio termina con una herramienta lista para usar — no con un reporte que nadie lee.</p>
+
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <span class="service-number">SERVICIO 01</span>
+        <h3>Tablero de Control Financiero</h3>
+        <p>Un sistema en Excel que te dice en 5 minutos cómo está tu negocio: flujo de caja, ingresos, gastos y lo que viene.</p>
+        <ul class="service-includes">
+          <li>Flujo de caja semanal y mensual</li>
+          <li>Dashboard visual con indicadores clave</li>
+          <li>Detalle de proveedores y gastos programados</li>
+          <li>1 mes de soporte y ajustes</li>
+        </ul>
+        <div class="service-price">$400 – $800 USD <span>/ proyecto único</span></div>
+      </div>
+
+      <div class="service-card fade-in">
+        <span class="service-number">SERVICIO 02</span>
+        <h3>Orden en Recursos Humanos</h3>
+        <p>Políticas claras por escrito para que las reglas del juego sean iguales para todos en tu empresa.</p>
+        <ul class="service-includes">
+          <li>Política de viáticos y reembolsos</li>
+          <li>Estructura de comisiones y ventas</li>
+          <li>Reglamento interno básico</li>
+          <li>Documentos listos para firmar</li>
+        </ul>
+        <div class="service-price">$300 – $600 USD <span>/ paquete</span></div>
+      </div>
+
+      <div class="service-card fade-in">
+        <span class="service-number">SERVICIO 03</span>
+        <h3>Automatización Operativa</h3>
+        <p>Reemplazamos tus procesos manuales con una herramienta que cualquier persona en tu equipo puede usar.</p>
+        <ul class="service-includes">
+          <li>Diagnóstico del proceso actual</li>
+          <li>Herramienta en Excel o app web</li>
+          <li>Capacitación al equipo</li>
+          <li>Documentación del proceso</li>
+        </ul>
+        <div class="service-price">$500 – $1,500 USD <span>/ proyecto</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="process" id="proceso">
+  <div class="section-inner">
+    <span class="section-eyebrow">Cómo funciona</span>
+    <h2 class="section-title">De la primera llamada<br>a la herramienta en tus manos</h2>
+    <div class="process-steps">
+      <div class="step fade-in">
+        <div class="step-circle">1</div>
+        <h4>Llamada de diagnóstico</h4>
+        <p>30 minutos gratis para entender qué necesita tu negocio y si podemos ayudarte.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-circle">2</div>
+        <h4>Propuesta concreta</h4>
+        <p>Te mandamos un documento claro con lo que haremos, cuánto cuesta y en cuánto tiempo.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-circle">3</div>
+        <h4>Construcción y revisión</h4>
+        <p>Trabajamos juntos para que la herramienta quede adaptada exactamente a tu operación.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-circle">4</div>
+        <h4>Entrega y soporte</h4>
+        <p>Recibes todo listo para usar, con capacitación incluida y soporte por 30 días.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contacto">
+  <h2>¿Tu negocio está listo<br>para el siguiente paso?</h2>
+  <p>Agenda una llamada de diagnóstico sin costo. Sin compromiso, sin ventas de presión.</p>
+  <div class="cta-actions">
+    <a href="https://wa.me/502XXXXXXXX?text=Hola%2C%20me%20interesa%20una%20llamada%20de%20diagn%C3%B3stico%20con%20Pr%C3%B3xima" class="btn-teal" target="_blank">📱 Escribir por WhatsApp</a>
+    <a href="mailto:alejandro.cruz@proxima-consulting.services" class="btn-outline-white">✉️ Enviar un correo</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Próxima</strong> · Consultoría para PYMEs guatemaltecas<br>
+  <span style="margin-top: 0.3rem; display: block;">alejandro.cruz@proxima-consulting.services · Guatemala</span>
+</footer>
+
+<script>
+  // Rotating text
+  const texts = document.querySelectorAll('.rotating-text');
+  let current = 0;
+
+  setInterval(() => {
+    texts[current].classList.remove('active');
+    texts[current].classList.add('exit');
+    setTimeout(() => texts[current].classList.remove('exit'), 500);
+    current = (current + 1) % texts.length;
+    texts[current].classList.add('active');
+  }, 2400);
+
+  // Fade in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
